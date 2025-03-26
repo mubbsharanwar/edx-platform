@@ -137,7 +137,7 @@ class AnnotatableBlockTestCase(unittest.TestCase):  # lint-amnesty, pylint: disa
 
     def test_instruction_removal(self):
         xmltree = etree.fromstring(self.sample_xml)
-        instructions = self.annotatable._extract_instructions(xmltree)
+        instructions = self.annotatable._extract_instructions(xmltree)  # lint-amnesty, pylint: disable=protected-access
 
         assert instructions is not None
         assert "Read the text." in instructions
