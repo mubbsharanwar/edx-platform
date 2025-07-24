@@ -51,6 +51,7 @@ def fake_get_value(name, default=None):
     return FAKE_SITE.get(name, default)
 
 
+# HIBP settings are only defined in lms envs but needed for common tests.
 @override_settings(ENABLE_AUTHN_REGISTER_HIBP_POLICY=False)
 class TestSite(TestCase):
     """Test for Account Creation from white labeled Sites"""

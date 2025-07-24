@@ -31,6 +31,7 @@ from common.djangoapps.student.tests.factories import AnonymousUserFactory, User
 
 
 @ddt.ddt
+# HIBP settings are only defined in lms envs but needed for common tests.
 @override_settings(
     ENABLE_AUTHN_LOGIN_BLOCK_HIBP_POLICY=False,
     ENABLE_AUTHN_LOGIN_NUDGE_HIBP_POLICY=False,

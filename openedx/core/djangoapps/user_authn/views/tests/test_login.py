@@ -47,6 +47,7 @@ from common.djangoapps.util.password_policy_validators import DEFAULT_MAX_PASSWO
 
 
 @ddt.ddt
+# HIBP settings are only defined in lms envs but needed for common tests.
 @override_settings(
     ENABLE_AUTHN_LOGIN_BLOCK_HIBP_POLICY=False,
     ENABLE_AUTHN_LOGIN_NUDGE_HIBP_POLICY=False,
@@ -384,6 +385,7 @@ class LoginTest(SiteMixin, CacheIsolationTestCase, OpenEdxEventsTestMixin):
         )
         self._assert_not_in_audit_log(mock_audit_log, 'warning', [self.user_email])
 
+    # HIBP settings are only defined in lms envs but needed for common tests.
     @override_settings(
         ENABLE_AUTHN_LOGIN_BLOCK_HIBP_POLICY=True,
         HIBP_LOGIN_BLOCK_PASSWORD_FREQUENCY_THRESHOLD=5.0,
@@ -401,6 +403,7 @@ class LoginTest(SiteMixin, CacheIsolationTestCase, OpenEdxEventsTestMixin):
 
         self._assert_response(response, success=False, error_code='require-password-change')
 
+    # HIBP settings are only defined in lms envs but needed for common tests.
     @override_settings(
         ENABLE_AUTHN_LOGIN_NUDGE_HIBP_POLICY=True,
         HIBP_LOGIN_NUDGE_PASSWORD_FREQUENCY_THRESHOLD=3.0,

@@ -11,6 +11,7 @@ from django.urls import reverse
 from common.djangoapps.util.password_policy_validators import create_validator_config
 
 
+# HIBP settings are only defined in lms envs but needed for common tests.
 @override_settings(
     RATELIMIT_ENABLE=False,
     ENABLE_AUTHN_REGISTER_HIBP_POLICY=False,
@@ -229,7 +230,7 @@ class TestPasswordPolicy(TestCase):
         obj = json.loads(response.content.decode('utf-8'))
         assert obj['success']
 
-
+# HIBP settings are only defined in lms envs but needed for common tests.
 @override_settings(
     RATELIMIT_ENABLE=False,
     ENABLE_AUTHN_REGISTER_HIBP_POLICY=False,

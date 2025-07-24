@@ -2848,6 +2848,7 @@ class RegistrationValidationViewTests(test_utils.ApiTestCase, OpenEdxEventsTestM
         ['country', list(testutils.VALID_COUNTRIES)],
     )
     @ddt.unpack
+    # HIBP settings are only defined in lms envs but needed for common tests.
     @override_settings(
         ENABLE_AUTHN_RESET_PASSWORD_HIBP_POLICY=False,
         ENABLE_AUTHN_REGISTER_HIBP_POLICY=False,
@@ -3040,9 +3041,6 @@ class RegistrationValidationViewTests(test_utils.ApiTestCase, OpenEdxEventsTestM
             {'email': AUTHN_EMAIL_CONFLICT_MSG}
         )
 
-    @override_settings(
-        ENABLE_AUTHN_REGISTER_HIBP_POLICY=True
-    )
     @mock.patch('eventtracking.tracker.emit')
     @mock.patch(
         'openedx.core.djangoapps.user_api.accounts.api.check_pwned_password',
@@ -3052,7 +3050,9 @@ class RegistrationValidationViewTests(test_utils.ApiTestCase, OpenEdxEventsTestM
             'user_request_page': 'registration',
         })
     )
+    # HIBP settings are only defined in lms envs but needed for tests here.
     @override_settings(
+        ENABLE_AUTHN_REGISTER_HIBP_POLICY=True,
         ENABLE_AUTHN_RESET_PASSWORD_HIBP_POLICY=True,
         HIBP_REGISTRATION_PASSWORD_FREQUENCY_THRESHOLD=3.0,
     )
