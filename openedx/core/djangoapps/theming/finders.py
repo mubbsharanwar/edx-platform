@@ -22,6 +22,7 @@ interface, as well.
 import os
 from collections import OrderedDict
 
+import django
 from django.contrib.staticfiles import utils
 from django.contrib.staticfiles.finders import BaseFinder
 
@@ -65,10 +66,16 @@ class ThemeFilesFinder(BaseFinder):  # lint-amnesty, pylint: disable=abstract-me
                 for path in utils.get_files(storage, ignore_patterns):
                     yield path, storage
 
-    def find(self, path, all=False):  # pylint: disable=redefined-builtin
+    def find(self, path, *args, **kwargs):  # handles both old and new signatures
         """
         Looks for files in the theme directories.
         """
+        # TODO: Remove this code when upgraded to Django 5.2.
+        if django.VERSION >= (5, 2):
+            find_all = kwargs.get("find_all", False)
+        else:
+            find_all = args[0] if args else False
+
         matches = []
         theme_dir_name = path.split("/", 1)[0]
 
@@ -79,7 +86,7 @@ class ThemeFilesFinder(BaseFinder):  # lint-amnesty, pylint: disable=abstract-me
             path = "/".join(path.split("/")[1:])
             match = self.find_in_theme(theme.theme_dir_name, path)
             if match:
-                if not all:
+                if not find_all:
                     return match
                 matches.append(match)
         return matches
